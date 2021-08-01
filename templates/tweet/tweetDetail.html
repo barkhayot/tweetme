@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  
+.shadow {
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+}
+.btn-danger {
+  color: #fff;
+  background-color: #f00000;
+  border-color: #dc281e;
+}
+.masthead {
+  background: #404040;
+  height: auto;
+  padding-bottom: 15px;
+  box-shadow: 0 16px 48px #E3E7EB;
+  padding-top: 10px;
+}
+  
+  .head_text {
+      color: white;
+  }
+  
+  .card {
+      box-shadow: 0 16px 48px #E3E7EB;
+  }
+</style>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+      
+        <p class=" text-muted">{{ tweetObj.user }} | {{ tweetObj.created_at }}</p>
+        <hr>
+        <h4 class="card-text ">{{ tweetObj.tweet_text | safe }}</h4>
+        {% if user.is_authenticated %}
+        <br>
+        <hr>
+        <form action="{% url 'tweetLike' tweetObj.id %}" method="POST">
+            {% csrf_token %}
+
+            {% if tweet_is_liked %}
+            <button type="submit" name="tweet_id" value="{{tweetObj.id}}" class="btn btn-block btn-sm" style="border-radius: 50px; background-color: #1DA1F2; color: white;">Unlike</button>
+
+            {% else %}
+            <button type="submit" name="tweet_id" value="{{tweetObj.id}}" class="btn btn-block btn-sm" style="border-radius: 50px; background-color: #1DA1F2; color: white;">Like</button>
+            {% endif %}
+            <strong class="text-secondary">{{ num_of_likes }} Like{{ num_of_likes|pluralize }} </strong> |
+            
+            <strong class="text-secondary">{{ tweetObj.num_of_comments }} Comment{{ tweetObj.num_of_comments|pluralize }}</strong>
+        </form>
+   
+        {% else %}
+        {% endif %}
+        
+        <br>
+        <br>
+<hr>
+        <h5>Leave your comment!</h5>
+<div id="comments_section">
+
+  {% if user.is_authenticated %}
+  <form method="POST" action="{% url 'tweetDetail' tweetObj.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ comment_form.content }}
+      <br>
+      <button class="btn btn-block btn" style="border-radius: 50px; background-color: #1DA1F2; color: white;" type="submit">Add comment <i class="fas fa-comments"></i></button>
+      <strong class="text-secondary">{{ tweetObj.num_of_comments }} Comment{{ tweetObj.num_of_comments|pluralize }}</strong>
+    </div>
+  </form>
+  {% else %}
+    <a  class="btn btn-block btn" style="border-radius: 50px; background-color: #1DA1F2; color: white;" type="submit" href="{% url 'loginpage' %}">Log in to add a comment!</a><br>
+  {% endif %}  
+  {% if comments %}
+  <ul>
+    {% for comment in comments %}
+    <hr>
+    <li>           
+     <div>
+        <span>
+          <strong class="text" style="color: #1DA1F2;">{{ comment.user }} </strong>
+          <small class="text-muted">{{ comment.date_posted }}</small>
+        </span>
+        <p>
+          {{ comment.content }}
+        </p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <br>
+    <strong class="text-secondary">No comments yet...</strong>
+
+   {% endif %}
+ 
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

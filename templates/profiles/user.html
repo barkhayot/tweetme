@@ -1,0 +1,10 @@
+<h1>This is Users Page</h1>
+
+{% for profile in profiles %}
+    <h2>{{profile.user.username}}</h2>
+    <p>{{profile.bio}}</p>
+    <p>Following : {{profile.follows.count}}</p>
+    <p>Followers : {{profile.followers.count}}</p>
+    <button 
+    type="submit">Follow</button>
+{% endfor %}

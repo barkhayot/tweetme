@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<style>
+.shadow {
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+}
+.btn-danger {
+    color: #fff;
+    background-color: #f00000;
+    border-color: #dc281e;
+}
+.masthead {
+    background: #1DA1F2;
+    height: auto;
+    padding-bottom: 15px;
+    box-shadow: 0 16px 48px #E3E7EB;
+    padding-top: 10px;
+}
+.navbar-brand h3{
+	font-size: 25px;
+  	font-weight: 700;
+	letter-spacing: 0;
+}
+    
+.head_text {
+        color: white;
+}
+    
+.card {
+        box-shadow: 0 16px 48px #E3E7EB;
+}
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class="head_text my-4 mt-3 text-white" style="font-style:italic ;"> Welcome <span style="color: black;">{{ user.username }}</span> to your TweetPage  </h3>
+                    <p class="text-light">We Love Your Tweets As much as you do..! &nbsp
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            {% for tweet in tweets %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    
+                    <h4 class="card-text h4"><a style=" text-decoration: none; color: black;" href="{% url 'tweetDetail' pk=tweet.pk %}">{{tweet.tweet_text|slice:":200" }}</a></h4>
+                    <br>
+                    <p class="card-text text-muted h6" >{{ tweet.user }} | {{ tweet.created_at}} </p>
+                    <strong class="text-secondary">{{ tweet.num_of_likes }} Like{{ tweet.num_of_likes|pluralize }}</strong>
+                    <strong class="text-secondary">{{ tweet.num_of_comments }} Comment{{ tweet.num_of_comments|pluralize }}</strong>
+                    <a class="btn btn-block btn-sm" style="border-radius: 50px; background-color: #1DA1F2; color: white;" href="{% url 'tweetDetail' pk=tweet.pk %}">More</a>
+                     
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{%endblock%}
+© 2021 GitHub, Inc.
+Terms
+
+
+
+
+<h1> this is tweet page</h1>
+
+
+{% for tweet in tweets %}
+<h2>Author : {{tweet.user}}</h2>
+<h3>{{tweet.tweet_text}}</h3>
+{% endfor %}

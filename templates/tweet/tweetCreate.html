@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-8 card mb-4  mt-3 left  top">
+        <div class="card-body">
+        
+          
+          <hr>
+          <h4 class="card-text ">Whats your thoughts?</h4>
+          <br>
+          <hr>
+          
+          <form action="" method="POST">
+
+          {% csrf_token %}
+        <div class="form-group">
+                {{new_tweet.tweet_text}}
+        </div>
+        <br>
+        <button class="btn btn-block btn" style="border-radius: 50px; background-color: #1DA1F2; color: white;" type="submit">TweetMe <i class="fas fa-comments"></i></button>
+              
+      </form>
+          
+          
+          
+    
+   
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+{% endblock %}

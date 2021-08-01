@@ -1,0 +1,8 @@
+<h1>This is following Users Page</h1>
+
+{% for profile in profiles %}
+    <h2>{{profile.user.username}}</h2>
+    <p>{{profile.bio}}</p>
+    
+{% endfor %} 
+    
